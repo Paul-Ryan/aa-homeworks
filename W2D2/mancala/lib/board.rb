@@ -5,6 +5,7 @@ class Board
     @name1 = name1
     @name2 = name2
     @cups = Array.new(14) { Array.new }
+    place_stones
   end
 
   def place_stones
@@ -18,9 +19,30 @@ class Board
   end
 
   def valid_move?(start_pos)
+    raise "Invalid starting cup" if start_pos < 0 || start_pos > 12
+    raise "Invalid starting cup" if @cups[start_pos].empty?
   end
 
   def make_move(start_pos, current_player_name)
+    stones = @cups[start_pos]
+    @cups[start_pos] = []
+
+    # distributes stones
+    cup_idx = start_pos
+    until stones.empty?
+      cup_idx += 1
+      cup_idx = 0 if cup_idx > 13
+      if cup_idx == 6
+        @cups[cup_idx] << stones.pop if current_player_name == @name1
+      elsif cup_idx == 13
+        @cups[cup_idx] << stones.pop if current_player_name == @name2
+      else
+        @cups[cup_idx] << stones.pop
+      end
+    end
+
+    # render # show this after you fix specs
+    next_turn(cup_idx)
   end
 
   def next_turn(ending_cup_idx)
