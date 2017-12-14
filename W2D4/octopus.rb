@@ -29,11 +29,10 @@ def combine_fish(left, right)
   ordered_fish = []
 
   until left.empty? || right.empty?
-    if left.first < right.first
-      ordered_fish.push(left.shift)
+    if left.first.length < right.first.length
+      ordered_fish << left.shift
     else
-      return [] if right.empty?
-      ordered_fish.push(right.shift)
+      ordered_fish << right.shift
     end
   end
 
@@ -42,10 +41,10 @@ end
 # puts "Inital: #{fish}"
 # puts "----------------"
 # fish.shuffle!
-# puts "Shuffle: #{fish}"
-# puts "----------------"
-# fish = merge_sort(fish)
-# puts "Sorted: #{fish}"
+puts "Shuffle: #{fish}"
+puts "----------------"
+fish = merge_sort(fish)
+puts "Sorted: #{fish.last}"
 
 
 def clever(fish)
@@ -61,3 +60,37 @@ end
 
 
 tiles_array = ["up", "right-up", "right", "right-down", "down", "left-down", "left",  "left-up" ]
+
+# solves this in O(n)
+def slow_dance(direction, array)
+  array.each_with_index do |tile, idx|
+    return idx if tile == direction
+  end
+
+  nil
+end
+
+p slow_dance("up", tiles_array) # => 0
+p slow_dance("right-down", tiles_array) # => 3
+
+tiles_hash = {
+  "up" => 0,
+  "right-up" => 1,
+  "right" => 2,
+  "right-down" => 3,
+  "down" => 4,
+  "left-down" => 5,
+  "left" => 6,
+  "left-up" => 7
+}
+
+# solves in O(1) time
+def constant_dance(direction, tiles_hash)
+  tiles_hash[direction]
+end
+
+p constant_dance("up", tiles_hash)
+# > 0
+
+p constant_dance("right-down", tiles_hash)
+# > 3
