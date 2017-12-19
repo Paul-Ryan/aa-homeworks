@@ -142,16 +142,16 @@ class Playwright
   def get_plays
     plays = PlayDBConnection.instance.execute(<<-SQL, @name)
       SELECT
-        plays
+        title
       FROM
         playwrights
       JOIN
         plays ON plays.playwright_id = playwrights.id
       WHERE
-        playwright = ?
+        playwrights.name = ?
     SQL
 
-    plays
+    plays.map { |play| Play.new(play) }
   end
 
   # Playwright::all
