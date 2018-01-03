@@ -11,17 +11,11 @@ class BooksController < ApplicationController
   def create
     book = Book.new(book_params)
     if book.save
-      redirect_to books_url
+      redirect_to books_url(@books)
     else
       flash.now[:errors] = book.errors.full_messages
       render :new
     end      
-  end
-
-  def destroy
-    book = Book.find(params[:id])
-    book.destroy
-    redirect_to books_url
   end
 
   def destroy
