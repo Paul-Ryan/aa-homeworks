@@ -28,6 +28,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -41,6 +43,8 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'annotate'
   gem 'pry-rails'
+  # Gemfile
+  gem 'letter_opener'  
 end
 
 group :development do
