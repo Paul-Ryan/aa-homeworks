@@ -74,9 +74,9 @@ console.log(isPrime(3548563));
 // Using firstNPrimes, write a function sumOfNPrimes(n) that returns the sum of the first n prime numbers. Hint: use isPrime as a helper method.
 
 function sumOfNPrimes(n) {
-  var numPrimes = 0;
-  var sum = 0;
-  var i = 2;
+  let numPrimes = 0;
+  let sum = 0;
+  let i = 2;
 
   while (numPrimes < n) {
     if (isPrime(i)) {
@@ -89,11 +89,117 @@ function sumOfNPrimes(n) {
   return sum;
 }
 
-console.log(sumOfNPrimes(0));
-// 0
+// console.log(sumOfNPrimes(0));
+// // 0
+//
+// console.log(sumOfNPrimes(1));
+// // 2
+//
+// console.log(sumOfNPrimes(4));
+// // 17
 
-console.log(sumOfNPrimes(1));
-// 2
 
-console.log(sumOfNPrimes(4));
-// 17
+// part II
+
+// Write a function titleize that takes an array of names and a function (callback). titleize should use Array.prototype.map to create a new array full of titleized versions of each name - titleize meaning "Roger" should be made to read "Mx. Roger Jingleheimer Schmidt". Then pass this new array of names to the callback, which should use Array.prototype.forEach to print out each titleized name.
+//
+// > titleize(["Mary", "Brian", "Leo"], printCallback);
+// Mx. Mary Jingleheimer Schmidt
+// Mx. Brian Jingleheimer Schmidt
+// Mx. Leo Jingleheimer Schmidt
+// undefined
+
+
+function titleize(names, callback) {
+  let titles = names.map(name => `Mx. ${name} Jingleheimer Schmidt`);
+  printCallback(titles);
+}
+
+function printCallback(names) {
+  names.forEach(name => console.log(name));
+}
+
+// titleize(["Mary", "Brian", "Leo"], printCallback);
+
+
+
+// First write a constructor function for an elephant. Each elephant should have a name, height (in inches), and array of tricks in gerund form (e.g. "painting a picture" rather than "paint a picture").
+//
+// Next write a few prototype functions that will be shared among all elephants:
+//
+// Elephant.prototype.trumpet: should print "(name) the elephant goes 'phrRRRRRRRRRRR!!!!!!!'"
+// Elephant.prototype.grow: should increase the elephant's height by 12 inches
+// Elephant.prototype.addTrick(trick): add a new trick to their existing repertoire
+// Elephant.prototype.play: print out a random trick, e.g. "(name) is (trick)!"
+// Hint: look up some JS Math methods!
+// Make sure to create an elephant and test all of these functions out on them method style!
+
+
+function Elephant(name, height, tricks) {
+  this.name = name;
+  this.height = height;
+  this.tricks = tricks;
+}
+
+Elephant.prototype.trumpet = function() {
+  console.log(`${this.name} goes phrRRRRRRRRRRR!!!!!!!`);
+};
+
+Elephant.prototype.grow = function() {
+  this.height += 12;
+};
+
+Elephant.prototype.play = function() {
+  let idx = Math.floor(Math.random() * this.tricks.length);
+  console.log(this.tricks[idx]);
+};
+
+let ellie = new Elephant("Ellie", 185, ["giving human friends a ride", "playing hide and seek"]);
+let charlie = new Elephant("Charlie", 200, ["painting pictures", "spraying water for a slip and slide"]);
+let kate = new Elephant("Kate", 234, ["writing letters", "stealing peanuts"]);
+let micah = new Elephant("Micah", 143, ["trotting", "playing tic tac toe", "doing elephant ballet"]);
+
+let herd = [ellie, charlie, kate, micah];
+
+
+// Now let's create a function called paradeHelper that we'll use to have an elephant parade. It should take a single elephant as an argument; this way, we can pass it as a callback to forEach when called on our herd. Make sure to store it as a property on the Elephant object. You can populate it with any console.log statement you want to build your parade (e.g. "_______ is trotting by!").
+//
+// For example:
+//
+// > Elephant.paradeHelper(micah);
+// Micah is trotting by!
+// undefined
+// Once you have this function, call forEach on the herd and pass it in as the callback without invoking it. Elephants galore!
+
+// Elephant.prototype.trumpet = function() {
+//   console.log(`${this.name} goes phrRRRRRRRRRRR!!!!!!!`);
+// };
+
+
+Elephant.paradeHelper = function(elephant) {
+  console.log(`${this.name} is ${this.play}`);
+};
+
+
+// invoking the function
+// titleize(["Mary", "Brian", "Leo"], (names) => {
+//   names.forEach(name => console.log(name));
+// });
+
+// herd.forEach(elephant => Elephant.paradeHelper(elephant));
+
+
+
+
+
+// Phase IV - Closures
+
+function dinerBreakfast() {
+  let order = "I'd like cheesy scrambled eggs please.";
+  console.log(order);
+
+  return function (food) {
+    order = `${order.slice(0, order.length - 8)} and ${food} please.`;
+    console.log(order);
+  };
+};
